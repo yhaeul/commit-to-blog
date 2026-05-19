@@ -4,6 +4,13 @@ GitHub 커밋/코드 변경 이력을 AI가 분석해 자동으로 개발 블로
 
 > 상세 문서: [아키텍처](docs/architecture.md) · [배포](docs/deployment.md) · [테스트](docs/testing.md) · [체크리스트](docs/checklist.md) · [인터랙션](docs/interactions.md)
 
+
+## 작업 전 필독
+
+작업을 시작하기 전에 반드시 관련 문서를 먼저 읽는다.
+
+구현 내용이 문서의 설계와 다를 경우, 코드를 작성하기 전에 반드시 해당 문서를 먼저 수정하는 절차가 필요하다. 설계 변경 없이 임의로 구현 방향을 바꾸지 않는다.
+
 ## Tech Stack
 
 - **Framework**: Next.js 14 (App Router, TypeScript, `src/` 디렉터리)
@@ -46,6 +53,23 @@ declare global { var mongoose: { conn: ...; promise: ... } }
 // src/components/shared/MarkdownEditor.tsx
 'use client'
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
+```
+
+### `'use client'` 사용 기준
+기본값은 Server Component. 아래 중 하나라도 해당되면 `'use client'`를 붙인다.
+- React hook 사용 (`useState`, `useEffect`, `useReducer` 등)
+- 브라우저 API 사용 (`window`, `sessionStorage` 등)
+- 이벤트 핸들러 (`onClick`, `onChange` 등)
+
+`'use client'`는 트리에서 최대한 아래쪽 컴포넌트에만 붙인다. 페이지 전체를 클라이언트로 만들지 않는다.
+
+### API 응답 형식
+```typescript
+// 성공 — 데이터 직접 반환
+Response.json(data)
+
+// 에러 — { error: string } + HTTP status
+Response.json({ error: "메시지" }, { status: 400 })  // 400 | 401 | 404 | 500
 ```
 
 ### Gemini 토큰 관리
