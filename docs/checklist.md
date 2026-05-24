@@ -108,11 +108,18 @@
 - [x] 발행 / 초안 토글
 
 ## 6. 마무리
-- [ ] NavBar (로고, 새 글 작성 버튼)
-- [ ] 에러 처리 (각 위저드 단계별)
-- [ ] Toast 알림 (저장 완료, 발행 등) — sonner 사용
-- [ ] Empty State (포스트 없을 때)
-- [ ] 로딩 스켈레톤
+- [x] NavBar (로고, 새 글 작성 버튼)
+  - [x] `src/components/shared/NavBar.tsx` 생성 — 로고 ("commit-to-blog" → `/posts` Link), "새 글 작성" 버튼 (→ `/new` Link)
+  - [x] `src/app/layout.tsx` 수정 — `<NavBar />` 추가 (`{/* NavBar 주석 */}` 교체)
+  - [x] `src/app/page.tsx` 수정 — Next.js 기본 페이지 제거, `redirect('/posts')` 처리
+- [x] 에러 처리 (각 위저드 단계별)
+  - [x] 이전 섹션 구현에서 완료 — Step 2~5 에러 상태 + 재시도 버튼, posts 페이지 에러 + 재시도 확인
+- [x] Toast 알림 (저장 완료, 발행 등) — sonner 사용
+  - [x] 이전 커밋에서 `<Toaster />` layout.tsx 추가 완료, `toast.success` / `toast.error` 사용 전체 확인
+- [x] Empty State (포스트 없을 때)
+  - [x] 이전 섹션 구현에서 완료 — posts/page.tsx "아직 작성된 글이 없습니다" + 새 글 작성 버튼 확인
+- [x] 로딩 스켈레톤
+  - [x] 이전 섹션 구현에서 완료 — PostCardSkeleton, posts/[id] 스켈레톤, wizard 단계별 Skeleton 확인
 
 ## 7. 배포
 - [ ] Vercel 프로젝트 생성 및 GitHub 저장소 연결

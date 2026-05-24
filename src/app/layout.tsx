@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
+import NavBar from "@/components/shared/NavBar";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* NavBar — 섹션 6에서 추가 */}
+        <NavBar />
         {children}
         <Toaster />
       </body>
