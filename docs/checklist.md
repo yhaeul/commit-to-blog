@@ -158,8 +158,8 @@
   - [x] `npm run build` 성공 확인
 
 ## 8. 배포
-- [ ] Vercel 프로젝트 생성 및 GitHub 저장소 연결
-- [ ] Vercel 환경변수 설정 (`MONGODB_URI`, `GEMINI_API_KEY`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `NEXTAUTH_SECRET`)
-- [ ] GitHub OAuth App callback URL을 Vercel 도메인으로 업데이트
-- [ ] MongoDB Atlas Network Access 설정 (0.0.0.0/0)
-- [ ] 배포 후 동작 확인
+- [x] Vercel 프로젝트 생성 및 GitHub 저장소 연결
+- [x] Vercel 환경변수 설정 (`MONGODB_URI`, `GEMINI_API_KEY`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `NEXTAUTH_SECRET`)
+- [x] GitHub OAuth App callback URL을 Vercel 도메인으로 업데이트
+- [x] MongoDB Atlas Network Access 설정 (0.0.0.0/0)
+- [x] 배포 후 동작 확인
