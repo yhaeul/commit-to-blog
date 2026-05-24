@@ -7,7 +7,7 @@ export async function generateBlogDraft(
   repoFullName: string,
   branch: string
 ): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
+  const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' })
 
   const diffContent = diffs.join('\n\n---\n\n')
 
