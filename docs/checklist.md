@@ -91,9 +91,19 @@
   - [x] `src/app/new/page.tsx` 수정 — `case 7:` placeholder를 `<StepSaved savedPostId={state.savedPostId} dispatch={dispatch} />` 로 교체
 
 ## 5. 포스트 목록 / 편집
-- [ ] 포스트 목록 화면 (카드 그리드)
-- [ ] 포스트 카드 컴포넌트 (제목, 저장소/브랜치 태그, 날짜, 발행 상태)
+- [x] 포스트 목록 화면 (카드 그리드)
+  - [x] `src/components/posts/PostCardSkeleton.tsx` 생성 — `Skeleton` 컴포넌트로 카드 형태 로딩 플레이스홀더
+  - [x] `src/components/posts/PostCard.tsx` 생성 — `title`, `repoFullName`·`branch` 태그, `createdAt`(date-fns), `published` 배지 표시
+  - [x] PostCard에 "수정하기" 버튼 → `/posts/[id]` Link, "발행하기"/"초안으로" 토글 버튼 → `PUT /api/posts/[id]` 호출, 낙관적 업데이트, 실패 시 롤백 + `toast.error`
+  - [x] `src/components/posts/PostGrid.tsx` 생성 — `posts` 배열 + `onTogglePublish` 콜백 props, PostCard 목록 렌더링
+  - [x] `src/app/posts/page.tsx` 생성 — `'use client'`, 마운트 시 `GET /api/posts` 호출, 로딩 중 `PostCardSkeleton` ×3, Empty State ("아직 작성된 글이 없습니다" + 새 글 작성 버튼), PostGrid 렌더링
+- [x] 포스트 카드 컴포넌트 (제목, 저장소/브랜치 태그, 날짜, 발행 상태)
 - [ ] 포스트 편집 화면
+  - [ ] `src/app/posts/[id]/page.tsx` 생성 — `'use client'`, 마운트 시 `GET /api/posts/[id]` 호출, 로딩 중 스켈레톤 표시
+  - [ ] 제목 `Input` + `MarkdownEditor`로 content 편집 — `parseTitle` / `removeFirstHeading` 동일 방식으로 분리
+  - [ ] "저장" 버튼 → `PUT /api/posts/[id]` 호출, 성공 시 `toast.success('저장되었습니다.')`
+  - [ ] "발행하기"/"초안으로 전환" 토글 버튼 → `PUT /api/posts/[id] { published }` 호출, `saving` 중 비활성화
+  - [ ] "삭제" 버튼 → `window.confirm` 후 `DELETE /api/posts/[id]` → `router.push('/posts')`
 - [ ] 발행 / 초안 토글
 
 ## 6. 마무리
