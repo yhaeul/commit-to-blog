@@ -47,7 +47,12 @@
   - [x] `src/hooks/useWizardState.ts` 생성 — `WizardState` 타입 및 `WizardAction` 유니온 타입 정의, `wizardReducer`, `useWizardState` 훅 export (actions: SET_PAT, SET_REPO, SET_BRANCH, SET_SHAS, SET_MARKDOWN, SET_SAVED, RESET)
   - [x] `src/components/wizard/WizardShell.tsx` 생성 — `step` prop을 받아 단계 인디케이터(1~7) + children 렌더링, `'use client'`
   - [x] `src/app/new/page.tsx` 생성 — `useWizardState` + `WizardShell` 연결, 각 step별 placeholder 텍스트 렌더링, `'use client'`
-- [ ] Step 1: PAT 입력 화면
+- [x] Step 1: PAT 입력 화면
+  - [x] `src/components/wizard/StepPatInput.tsx` 생성 — `'use client'`, password 타입 입력창, 확인 버튼
+  - [x] 확인 버튼 클릭 시 `/api/github/validate` 호출, 로딩 중 버튼 비활성화 + 스피너 표시
+  - [x] 성공 시 `dispatch({ type: 'SET_PAT', pat, user })` 호출 → Step 2 이동
+  - [x] 실패 시 "유효하지 않은 PAT입니다" 에러 메시지 인라인 표시
+  - [x] `src/app/new/page.tsx` 수정 — `case 1:` placeholder를 `<StepPatInput dispatch={dispatch} />` 로 교체
 - [ ] Step 2: 저장소 선택 화면
 - [ ] Step 3: 브랜치 선택 화면
 - [ ] Step 4: 커밋 선택 화면

@@ -1,15 +1,16 @@
 'use client'
 
 import WizardShell from '@/components/wizard/WizardShell'
+import StepPatInput from '@/components/wizard/StepPatInput'
 import { useWizardState } from '@/hooks/useWizardState'
 
 export default function NewPage() {
-  const { state } = useWizardState()
+  const { state, dispatch } = useWizardState()
 
   function renderStep() {
     switch (state.step) {
       case 1:
-        return <div className="text-center text-muted-foreground">Step 1: PAT 입력 (준비 중)</div>
+        return <StepPatInput dispatch={dispatch} />
       case 2:
         return <div className="text-center text-muted-foreground">Step 2: 저장소 선택 (준비 중)</div>
       case 3:
