@@ -73,6 +73,12 @@ export default function StepCommitSelect({ pat, repo, branch, dispatch }: StepCo
         </p>
       )}
 
+      {selectedShas.length >= 3 && (
+        <p className="mb-3 rounded-md bg-muted px-4 py-2 text-center text-xs text-muted-foreground">
+          💡 커밋이 많을수록 일부 변경사항이 생략될 수 있습니다. 3개 이하를 권장합니다.
+        </p>
+      )}
+
       <div className="mb-6 max-h-96 space-y-2 overflow-y-auto rounded-md border p-2">
         {loading ? (
           Array.from({ length: 6 }).map((_, i) => (

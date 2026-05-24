@@ -70,7 +70,13 @@
   - [x] 체크박스로 다중 선택, 선택 개수 표시 ("N개 선택됨"), 최소 1개 선택 시 다음 버튼 활성화
   - [x] 다음 버튼 클릭 시 `dispatch({ type: 'SET_SHAS', shas: selectedShas })` 호출
   - [x] `src/app/new/page.tsx` 수정 — `case 4:` placeholder를 `<StepCommitSelect pat={state.pat} repo={state.repo!} branch={state.branch} dispatch={dispatch} />` 로 교체
-- [ ] Step 5: AI 생성 중 화면 (로딩)
+- [x] Step 5: AI 생성 중 화면 (로딩)
+  - [x] `src/components/wizard/StepGenerating.tsx` 생성 — `'use client'`, 진입 시 자동 실행
+  - [x] 1단계: `x-github-pat` 헤더로 `/api/github/diff?owner=&repo=&shas=` 호출, 상태 텍스트 "변경사항 분석 중…" 표시
+  - [x] 2단계: diff 응답으로 `/api/generate` POST 호출, 상태 텍스트 "초안 작성 중…" 표시
+  - [x] 성공 시 `dispatch({ type: 'SET_MARKDOWN', markdown })` 호출 → Step 6 이동
+  - [x] 실패 시 에러 메시지 + 재시도 버튼 (Step 4로 돌아가지 않고 동일 단계에서 재시도)
+  - [x] `src/app/new/page.tsx` 수정 — `case 5:` placeholder를 `<StepGenerating pat={state.pat} repo={state.repo!} branch={state.branch} selectedShas={state.selectedShas} dispatch={dispatch} />` 로 교체
 - [ ] Step 6: 글 편집 화면 (마크다운 에디터)
 - [ ] Step 7: 저장 완료 화면
 

@@ -30,10 +30,26 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error('generate error:', err)
     return Response.json(
-      { error: '블로그 초안 생성에 실패했습니다.' },
+      { error: classifyGeminiError(err) },
       { status: 500 }
     )
   }
+}
+
+function classifyGeminiError(err: unknown): string {
+  const msg = err instanceof Error ? err.message : ''
+
+  if (msg.includes('429') || /too many requests/i.test(msg)) {
+    return '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.'
+  }
+  if (msg.includes('404') || /is not found/i.test(msg)) {
+    return 'AI 모델을 찾을 수 없습니다. 모델명을 확인해주세요.'
+  }
+  if (msg.includes('403') || /api key/i.test(msg) || /quota/i.test(msg)) {
+    return 'API 키가 유효하지 않거나 할당량이 초과되었습니다.'
+  }
+
+  return `블로그 초안 생성에 실패했습니다. (상세: ${msg || '알 수 없는 오류'})`
 }
 
 function truncateDiffs(diffs: string[], limit: number): string[] {
