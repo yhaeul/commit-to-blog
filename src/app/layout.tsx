@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -28,7 +29,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {/* NavBar — 섹션 6에서 추가 */}
         {children}
-        {/* Sonner Toaster — 섹션 6에서 추가 */}
+        <Toaster />
       </body>
     </html>
   );
