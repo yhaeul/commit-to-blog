@@ -138,19 +138,19 @@
   - [x] `src/app/api/github/branches/route.ts` — 동일
   - [x] `src/app/api/github/commits/route.ts` — 동일
   - [x] `src/app/api/github/diff/route.ts` — 동일
-- [ ] `StepPatInput` 삭제, `usePat` 삭제, `WizardState`에서 `pat`/`user` 필드 제거 (step 범위 1–6)
-  - [ ] `src/hooks/usePat.ts` 삭제
-  - [ ] `src/components/wizard/StepPatInput.tsx` 삭제
-  - [ ] `src/hooks/useWizardState.ts` 수정 — `pat`/`user` 필드 및 `SET_PAT` 액션 제거, step 범위 1–6
-  - [ ] `src/components/wizard/WizardShell.tsx` 수정 — 단계 인디케이터 총 6단계로 변경
-- [ ] 위저드 컴포넌트 4개 — `pat` prop 및 헤더 전송 제거
-  - [ ] `src/components/wizard/StepRepoSelect.tsx` — `pat` prop 제거, fetch에서 `'x-github-pat'` 헤더 제거
-  - [ ] `src/components/wizard/StepBranchSelect.tsx` — 동일
-  - [ ] `src/components/wizard/StepCommitSelect.tsx` — 동일
-  - [ ] `src/components/wizard/StepGenerating.tsx` — 동일
-- [ ] `/new` 페이지 — 미인증 시 로그인 리다이렉트
-  - [ ] `src/app/new/page.tsx` 수정 — `useSession()`으로 미인증 시 `signIn()` 호출
-  - [ ] `pat` 관련 props 전달 제거, `case` 번호 1–6으로 조정
+- [x] `StepPatInput` 삭제, `usePat` 삭제, `WizardState`에서 `pat`/`user` 필드 제거 (step 범위 1–6)
+  - [x] `src/hooks/usePat.ts` 삭제
+  - [x] `src/components/wizard/StepPatInput.tsx` 삭제
+  - [x] `src/hooks/useWizardState.ts` 수정 — `pat`/`user` 필드 및 `SET_PAT` 액션 제거, step 범위 1–6
+  - [x] `src/components/wizard/WizardShell.tsx` 수정 — 단계 인디케이터 총 6단계로 변경
+- [x] 위저드 컴포넌트 4개 — `pat` prop 및 헤더 전송 제거
+  - [x] `src/components/wizard/StepRepoSelect.tsx` — `pat` prop 제거, fetch에서 `'x-github-pat'` 헤더 제거
+  - [x] `src/components/wizard/StepBranchSelect.tsx` — 동일
+  - [x] `src/components/wizard/StepCommitSelect.tsx` — 동일
+  - [x] `src/components/wizard/StepGenerating.tsx` — 동일
+- [x] `/new` 페이지 — 미인증 시 로그인 리다이렉트
+  - [x] `src/app/new/page.tsx` 수정 — `useSession()`으로 미인증 시 `signIn()` 호출
+  - [x] `pat` 관련 props 전달 제거, `case` 번호 1–6으로 조정
 - [ ] NavBar — 로그인/로그아웃 버튼 추가 (`useSession`)
   - [ ] `src/components/shared/NavBar.tsx` 수정 — `useSession()`으로 로그인 상태 감지
   - [ ] 미로그인: "로그인" 버튼 → `signIn('github')` 호출

@@ -6,7 +6,6 @@ import type { WizardAction } from '@/hooks/useWizardState'
 import type { Repo } from '@/types'
 
 interface StepGeneratingProps {
-  pat: string
   repo: Repo
   branch: string
   selectedShas: string[]
@@ -23,7 +22,6 @@ const STATUS_TEXT: Record<Status, string> = {
 }
 
 export default function StepGenerating({
-  pat,
   repo,
   branch,
   selectedShas,
@@ -44,9 +42,7 @@ export default function StepGenerating({
       // 1단계: diff 수집
       const shaParam = selectedShas.join(',')
       const params = new URLSearchParams({ owner, repo: repoName, shas: shaParam })
-      const diffRes = await fetch(`/api/github/diff?${params}`, {
-        headers: { 'x-github-pat': pat },
-      })
+      const diffRes = await fetch(`/api/github/diff?${params}`)
       if (!diffRes.ok) {
         const body = await diffRes.json().catch(() => ({}))
         throw new Error(body.error ?? '변경사항을 불러오지 못했습니다.')
@@ -76,7 +72,7 @@ export default function StepGenerating({
       setError(e instanceof Error ? e.message : '오류가 발생했습니다. 다시 시도해주세요.')
       setStatus('error')
     }
-  }, [owner, repoName, selectedShas, pat, repo.full_name, branch, dispatch])
+  }, [owner, repoName, selectedShas, repo.full_name, branch, dispatch])
 
   useEffect(() => {
     run()

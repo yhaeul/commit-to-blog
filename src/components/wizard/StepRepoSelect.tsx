@@ -8,11 +8,10 @@ import type { WizardAction } from '@/hooks/useWizardState'
 import type { Repo } from '@/types'
 
 interface StepRepoSelectProps {
-  pat: string
   dispatch: React.Dispatch<WizardAction>
 }
 
-export default function StepRepoSelect({ pat, dispatch }: StepRepoSelectProps) {
+export default function StepRepoSelect({ dispatch }: StepRepoSelectProps) {
   const [repos, setRepos] = useState<Repo[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -23,9 +22,7 @@ export default function StepRepoSelect({ pat, dispatch }: StepRepoSelectProps) {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch('/api/github/repos', {
-        headers: { 'x-github-pat': pat },
-      })
+      const res = await fetch('/api/github/repos')
       if (!res.ok) throw new Error('저장소 목록을 불러오지 못했습니다.')
       const data = await res.json()
       setRepos(data)

@@ -1,12 +1,10 @@
 'use client'
 
 import { useReducer } from 'react'
-import type { GitHubUser, Repo } from '@/types'
+import type { Repo } from '@/types'
 
 export type WizardState = {
   step: number
-  pat: string
-  user: GitHubUser | null
   repo: Repo | null
   branch: string
   selectedShas: string[]
@@ -15,7 +13,6 @@ export type WizardState = {
 }
 
 export type WizardAction =
-  | { type: 'SET_PAT'; pat: string; user: GitHubUser }
   | { type: 'SET_REPO'; repo: Repo }
   | { type: 'SET_BRANCH'; branch: string }
   | { type: 'SET_SHAS'; shas: string[] }
@@ -26,8 +23,6 @@ export type WizardAction =
 
 const initialState: WizardState = {
   step: 1,
-  pat: '',
-  user: null,
   repo: null,
   branch: '',
   selectedShas: [],
@@ -37,18 +32,16 @@ const initialState: WizardState = {
 
 export function wizardReducer(state: WizardState, action: WizardAction): WizardState {
   switch (action.type) {
-    case 'SET_PAT':
-      return { ...state, pat: action.pat, user: action.user, step: 2 }
     case 'SET_REPO':
-      return { ...state, repo: action.repo, step: 3 }
+      return { ...state, repo: action.repo, step: 2 }
     case 'SET_BRANCH':
-      return { ...state, branch: action.branch, step: 4 }
+      return { ...state, branch: action.branch, step: 3 }
     case 'SET_SHAS':
-      return { ...state, selectedShas: action.shas, step: 5 }
+      return { ...state, selectedShas: action.shas, step: 4 }
     case 'SET_MARKDOWN':
-      return { ...state, generatedMarkdown: action.markdown, step: 6 }
+      return { ...state, generatedMarkdown: action.markdown, step: 5 }
     case 'SET_SAVED':
-      return { ...state, savedPostId: action.postId, step: 7 }
+      return { ...state, savedPostId: action.postId, step: 6 }
     case 'BACK':
       return { ...state, step: Math.max(1, state.step - 1) }
     case 'RESET':

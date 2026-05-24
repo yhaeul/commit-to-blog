@@ -9,13 +9,12 @@ import type { WizardAction } from '@/hooks/useWizardState'
 import type { Commit, Repo } from '@/types'
 
 interface StepCommitSelectProps {
-  pat: string
   repo: Repo
   branch: string
   dispatch: React.Dispatch<WizardAction>
 }
 
-export default function StepCommitSelect({ pat, repo, branch, dispatch }: StepCommitSelectProps) {
+export default function StepCommitSelect({ repo, branch, dispatch }: StepCommitSelectProps) {
   const [commits, setCommits] = useState<Commit[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -28,9 +27,7 @@ export default function StepCommitSelect({ pat, repo, branch, dispatch }: StepCo
     setError('')
     try {
       const params = new URLSearchParams({ owner, repo: repoName, branch })
-      const res = await fetch(`/api/github/commits?${params}`, {
-        headers: { 'x-github-pat': pat },
-      })
+      const res = await fetch(`/api/github/commits?${params}`)
       if (!res.ok) throw new Error('커밋 목록을 불러오지 못했습니다.')
       const data = await res.json()
       setCommits(data)

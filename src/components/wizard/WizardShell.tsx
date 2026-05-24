@@ -1,7 +1,6 @@
 'use client'
 
 const STEPS = [
-  'PAT 입력',
   '저장소 선택',
   '브랜치 선택',
   '커밋 선택',

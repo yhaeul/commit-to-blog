@@ -7,12 +7,11 @@ import type { WizardAction } from '@/hooks/useWizardState'
 import type { Branch, Repo } from '@/types'
 
 interface StepBranchSelectProps {
-  pat: string
   repo: Repo
   dispatch: React.Dispatch<WizardAction>
 }
 
-export default function StepBranchSelect({ pat, repo, dispatch }: StepBranchSelectProps) {
+export default function StepBranchSelect({ repo, dispatch }: StepBranchSelectProps) {
   const [branches, setBranches] = useState<Branch[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -25,9 +24,7 @@ export default function StepBranchSelect({ pat, repo, dispatch }: StepBranchSele
     setError('')
     try {
       const params = new URLSearchParams({ owner, repo: repoName })
-      const res = await fetch(`/api/github/branches?${params}`, {
-        headers: { 'x-github-pat': pat },
-      })
+      const res = await fetch(`/api/github/branches?${params}`)
       if (!res.ok) throw new Error('브랜치 목록을 불러오지 못했습니다.')
       const data = await res.json()
       setBranches(data)
