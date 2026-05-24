@@ -5,7 +5,7 @@
 ```
 src/
 ├── app/
-│   ├── layout.tsx                        # Root layout — NavBar, Toaster 포함
+│   ├── layout.tsx                        # Root layout — NavBar, Sonner Toaster 포함
 │   ├── page.tsx                          # / → /posts 리다이렉트
 │   ├── globals.css
 │   ├── new/

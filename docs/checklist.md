@@ -1,11 +1,11 @@
 # 구현 체크리스트
 
 ## 1. 프로젝트 초기화
-- [ ] Next.js 14 초기화 (App Router, TypeScript, Tailwind, src/)
-- [ ] shadcn/ui 설정 및 컴포넌트 추가
-- [ ] 추가 패키지 설치 (mongoose, @google/generative-ai, @uiw/react-md-editor, date-fns)
-- [ ] `.env.local` 생성 (MONGODB_URI, GEMINI_API_KEY)
-- [ ] `.gitignore` 확인 (.env.local 포함 여부)
+- [x] Next.js 14 초기화 (App Router, TypeScript, Tailwind, src/)
+- [x] shadcn/ui 설정 및 컴포넌트 추가 (toast → sonner 교체)
+- [x] 추가 패키지 설치 (mongoose, @google/generative-ai, @uiw/react-md-editor, date-fns)
+- [x] `.env.local` 생성 (MONGODB_URI, GEMINI_API_KEY)
+- [x] `.gitignore` 확인 (.env.local 포함 여부)
 
 ## 2. 데이터 레이어
 - [ ] MongoDB 연결 싱글톤 (`src/lib/mongodb.ts`)
@@ -40,7 +40,7 @@
 ## 6. 마무리
 - [ ] NavBar (로고, 새 글 작성 버튼)
 - [ ] 에러 처리 (각 위저드 단계별)
-- [ ] Toast 알림 (저장 완료, 발행 등)
+- [ ] Toast 알림 (저장 완료, 발행 등) — sonner 사용
 - [ ] Empty State (포스트 없을 때)
 - [ ] 로딩 스켈레톤
 

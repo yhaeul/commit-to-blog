@@ -76,13 +76,19 @@ Response.json({ error: "메시지" }, { status: 400 })  // 400 | 401 | 404 | 500
 커밋당 diff를 6000자, 전체 payload를 20000자로 truncate해 무료 티어를 초과하지 않는다.
 응답의 첫 `# ` 줄을 파싱해 포스트 제목으로 자동 채운다.
 
+## 섹션 완료 후 검증
+
+체크리스트의 섹션 하나를 완료할 때마다 `npm run build`를 실행한다.
+빌드가 실패하면 커밋 전에 수정한다.
+(tsc + lint는 커밋 시 husky가 자동으로 검사한다.)
+
 ## 매 커밋 전 검증 (pre-commit hook)
 
 husky를 사용해 커밋 시 자동 실행한다. 실패 시 커밋이 막힌다.
 
 ```bash
-tsc --noEmit   # TypeScript 타입 체크
-eslint .        # ESLint
+npx tsc --noEmit   # TypeScript 타입 체크
+npm run lint       # ESLint (next lint)
 ```
 
 ## 커밋 컨벤션
