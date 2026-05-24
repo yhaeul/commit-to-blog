@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { useSession, signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -35,7 +36,7 @@ function removeFirstHeading(markdown: string): string {
 export default function PostEditPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
-
+  const { status } = useSession()
   const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)
   const [title, setTitle] = useState('')
@@ -43,6 +44,11 @@ export default function PostEditPage() {
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
+    if (status === 'unauthenticated') signIn('github')
+  }, [status])
+
+  useEffect(() => {
+    if (status !== 'authenticated') return
     async function loadPost() {
       try {
         const res = await fetch(`/api/posts/${id}`)
@@ -58,7 +64,15 @@ export default function PostEditPage() {
       }
     }
     loadPost()
-  }, [id])
+  }, [id, status])
+
+  if (status === 'loading' || status === 'unauthenticated') {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    )
+  }
 
   async function handleSave() {
     if (!title.trim()) {

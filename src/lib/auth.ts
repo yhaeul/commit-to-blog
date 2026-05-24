@@ -15,6 +15,14 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    async signIn({ profile }) {
+      // ALLOWED_GITHUB_LOGIN이 설정된 경우 해당 계정만 로그인 허용
+      const allowed = process.env.ALLOWED_GITHUB_LOGIN
+      if (allowed && (profile as { login?: string })?.login !== allowed) {
+        return false
+      }
+      return true
+    },
     async jwt({ token, account }) {
       // 최초 로그인 시 account에 GitHub 액세스 토큰이 포함됨
       if (account?.access_token) {

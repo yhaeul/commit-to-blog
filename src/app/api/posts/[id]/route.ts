@@ -1,4 +1,6 @@
 import { NextRequest } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import { connectDB } from '@/lib/mongodb'
 import Post from '@/models/Post'
 
@@ -25,6 +27,11 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    return Response.json({ error: '로그인이 필요합니다.' }, { status: 401 })
+  }
+
   try {
     await connectDB()
     const body = await req.json()
@@ -48,6 +55,11 @@ export async function DELETE(
   _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    return Response.json({ error: '로그인이 필요합니다.' }, { status: 401 })
+  }
+
   try {
     await connectDB()
     const post = await Post.findByIdAndDelete(params.id)

@@ -151,11 +151,11 @@
 - [x] `/new` 페이지 — 미인증 시 로그인 리다이렉트
   - [x] `src/app/new/page.tsx` 수정 — `useSession()`으로 미인증 시 `signIn()` 호출
   - [x] `pat` 관련 props 전달 제거, `case` 번호 1–6으로 조정
-- [ ] NavBar — 로그인/로그아웃 버튼 추가 (`useSession`)
-  - [ ] `src/components/shared/NavBar.tsx` 수정 — `useSession()`으로 로그인 상태 감지
-  - [ ] 미로그인: "로그인" 버튼 → `signIn('github')` 호출
-  - [ ] 로그인: 사용자 아바타(`session.user.image`) + 이름 표시, "로그아웃" 버튼 → `signOut()` 호출
-  - [ ] `npm run build` 성공 확인
+- [x] NavBar — 로그인/로그아웃 버튼 추가 (`useSession`)
+  - [x] `src/components/shared/NavBar.tsx` 수정 — `useSession()`으로 로그인 상태 감지
+  - [x] 미로그인: "로그인" 버튼 → `signIn('github')` 호출
+  - [x] 로그인: 사용자 아바타(`session.user.image`) + 이름 표시, "로그아웃" 버튼 → `signOut()` 호출
+  - [x] `npm run build` 성공 확인
 
 ## 8. 배포
 - [ ] Vercel 프로젝트 생성 및 GitHub 저장소 연결
