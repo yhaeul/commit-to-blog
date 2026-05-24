@@ -53,7 +53,12 @@
   - [x] 성공 시 `dispatch({ type: 'SET_PAT', pat, user })` 호출 → Step 2 이동
   - [x] 실패 시 "유효하지 않은 PAT입니다" 에러 메시지 인라인 표시
   - [x] `src/app/new/page.tsx` 수정 — `case 1:` placeholder를 `<StepPatInput dispatch={dispatch} />` 로 교체
-- [ ] Step 2: 저장소 선택 화면
+- [x] Step 2: 저장소 선택 화면
+  - [x] `src/components/wizard/StepRepoSelect.tsx` 생성 — `'use client'`, 진입 시 `/api/github/repos` 자동 로드 (`x-github-pat` 헤더)
+  - [x] 로딩 중 스켈레톤 표시, 로드 실패 시 에러 메시지 + 재시도 버튼
+  - [x] 검색 입력으로 저장소 이름 실시간 필터링
+  - [x] 저장소 클릭 시 하이라이트, 다음 버튼 활성화 → 클릭 시 `dispatch({ type: 'SET_REPO', repo })` 호출
+  - [x] `src/app/new/page.tsx` 수정 — `case 2:` placeholder를 `<StepRepoSelect pat={state.pat} dispatch={dispatch} />` 로 교체
 - [ ] Step 3: 브랜치 선택 화면
 - [ ] Step 4: 커밋 선택 화면
 - [ ] Step 5: AI 생성 중 화면 (로딩)

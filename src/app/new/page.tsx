@@ -2,6 +2,7 @@
 
 import WizardShell from '@/components/wizard/WizardShell'
 import StepPatInput from '@/components/wizard/StepPatInput'
+import StepRepoSelect from '@/components/wizard/StepRepoSelect'
 import { useWizardState } from '@/hooks/useWizardState'
 
 export default function NewPage() {
@@ -12,7 +13,7 @@ export default function NewPage() {
       case 1:
         return <StepPatInput dispatch={dispatch} />
       case 2:
-        return <div className="text-center text-muted-foreground">Step 2: 저장소 선택 (준비 중)</div>
+        return <StepRepoSelect pat={state.pat} dispatch={dispatch} />
       case 3:
         return <div className="text-center text-muted-foreground">Step 3: 브랜치 선택 (준비 중)</div>
       case 4:
