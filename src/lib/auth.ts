@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ profile }) {
       // ALLOWED_GITHUB_LOGIN이 설정된 경우 해당 계정만 로그인 허용
-      const allowed = process.env.ALLOWED_GITHUB_LOGIN
+      const allowed = process.env.NEXT_PUBLIC_ALLOWED_GITHUB_LOGIN
       if (allowed && (profile as { login?: string })?.login !== allowed) {
         return false
       }
