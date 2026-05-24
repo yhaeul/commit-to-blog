@@ -42,7 +42,11 @@
 - [x] `GET/PUT/DELETE /api/posts/[id]` — 포스트 조회 / 수정 / 삭제
 
 ## 4. 위저드 UI (블로그 생성 흐름)
-- [ ] 위저드 레이아웃 및 단계 인디케이터 (`WizardShell`)
+- [x] 위저드 레이아웃 및 단계 인디케이터 (`WizardShell`)
+  - [x] `src/hooks/usePat.ts` 생성 — sessionStorage에서 PAT read/write하는 커스텀 훅 (`'use client'`)
+  - [x] `src/hooks/useWizardState.ts` 생성 — `WizardState` 타입 및 `WizardAction` 유니온 타입 정의, `wizardReducer`, `useWizardState` 훅 export (actions: SET_PAT, SET_REPO, SET_BRANCH, SET_SHAS, SET_MARKDOWN, SET_SAVED, RESET)
+  - [x] `src/components/wizard/WizardShell.tsx` 생성 — `step` prop을 받아 단계 인디케이터(1~7) + children 렌더링, `'use client'`
+  - [x] `src/app/new/page.tsx` 생성 — `useWizardState` + `WizardShell` 연결, 각 step별 placeholder 텍스트 렌더링, `'use client'`
 - [ ] Step 1: PAT 입력 화면
 - [ ] Step 2: 저장소 선택 화면
 - [ ] Step 3: 브랜치 선택 화면
