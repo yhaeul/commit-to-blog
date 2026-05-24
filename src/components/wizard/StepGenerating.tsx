@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import type { WizardAction } from '@/hooks/useWizardState'
 import type { Repo } from '@/types'
@@ -31,10 +31,12 @@ export default function StepGenerating({
 }: StepGeneratingProps) {
   const [status, setStatus] = useState<Status>('diff')
   const [error, setError] = useState('')
+  const cancelledRef = useRef(false)
 
   const [owner, repoName] = repo.full_name.split('/')
 
   const run = useCallback(async () => {
+    cancelledRef.current = false
     setStatus('diff')
     setError('')
 
@@ -65,8 +67,12 @@ export default function StepGenerating({
       const { markdown } = await genRes.json()
 
       setStatus('done')
-      dispatch({ type: 'SET_MARKDOWN', markdown })
+      // 뒤로가기로 컴포넌트가 언마운트된 경우 dispatch 건너뜀
+      if (!cancelledRef.current) {
+        dispatch({ type: 'SET_MARKDOWN', markdown })
+      }
     } catch (e) {
+      if (cancelledRef.current) return
       setError(e instanceof Error ? e.message : '오류가 발생했습니다. 다시 시도해주세요.')
       setStatus('error')
     }
@@ -74,6 +80,9 @@ export default function StepGenerating({
 
   useEffect(() => {
     run()
+    return () => {
+      cancelledRef.current = true
+    }
   }, [run])
 
   if (status === 'error') {
@@ -82,7 +91,12 @@ export default function StepGenerating({
         <div className="mb-4 text-4xl">⚠️</div>
         <h2 className="mb-2 text-xl font-bold">오류가 발생했습니다</h2>
         <p className="mb-6 text-sm text-muted-foreground">{error}</p>
-        <Button onClick={run}>다시 시도</Button>
+        <div className="flex justify-center gap-3">
+          <Button variant="outline" onClick={() => dispatch({ type: 'BACK' })}>
+            뒤로
+          </Button>
+          <Button onClick={run}>다시 시도</Button>
+        </div>
       </div>
     )
   }
@@ -98,7 +112,7 @@ export default function StepGenerating({
         </p>
       </div>
 
-      <div className="space-y-2">
+      <div className="mb-6 space-y-2">
         {(['diff', 'generate'] as const).map((s) => {
           const isDone = status === 'done' || (status === 'generate' && s === 'diff')
           const isCurrent = status === s
@@ -119,6 +133,10 @@ export default function StepGenerating({
           )
         })}
       </div>
+
+      <Button variant="outline" onClick={() => dispatch({ type: 'BACK' })}>
+        뒤로
+      </Button>
     </div>
   )
 }

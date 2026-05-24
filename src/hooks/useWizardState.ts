@@ -21,6 +21,7 @@ export type WizardAction =
   | { type: 'SET_SHAS'; shas: string[] }
   | { type: 'SET_MARKDOWN'; markdown: string }
   | { type: 'SET_SAVED'; postId: string }
+  | { type: 'BACK' }
   | { type: 'RESET' }
 
 const initialState: WizardState = {
@@ -48,6 +49,8 @@ export function wizardReducer(state: WizardState, action: WizardAction): WizardS
       return { ...state, generatedMarkdown: action.markdown, step: 6 }
     case 'SET_SAVED':
       return { ...state, savedPostId: action.postId, step: 7 }
+    case 'BACK':
+      return { ...state, step: Math.max(1, state.step - 1) }
     case 'RESET':
       return initialState
     default:

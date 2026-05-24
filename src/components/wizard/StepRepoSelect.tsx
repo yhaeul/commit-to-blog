@@ -110,9 +110,14 @@ export default function StepRepoSelect({ pat, dispatch }: StepRepoSelectProps) {
         )}
       </div>
 
-      <Button className="w-full" disabled={!selected} onClick={handleNext}>
-        다음
-      </Button>
+      <div className="flex gap-3">
+        <Button variant="outline" onClick={() => dispatch({ type: 'BACK' })}>
+          뒤로
+        </Button>
+        <Button className="flex-1" disabled={!selected} onClick={handleNext}>
+          다음
+        </Button>
+      </div>
     </div>
   )
 }

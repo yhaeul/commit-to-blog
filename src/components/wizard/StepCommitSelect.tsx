@@ -128,9 +128,14 @@ export default function StepCommitSelect({ pat, repo, branch, dispatch }: StepCo
         )}
       </div>
 
-      <Button className="w-full" disabled={selectedShas.length === 0} onClick={handleNext}>
-        다음 {selectedShas.length > 0 && `(${selectedShas.length}개)`}
-      </Button>
+      <div className="flex gap-3">
+        <Button variant="outline" onClick={() => dispatch({ type: 'BACK' })}>
+          뒤로
+        </Button>
+        <Button className="flex-1" disabled={selectedShas.length === 0} onClick={handleNext}>
+          다음 {selectedShas.length > 0 && `(${selectedShas.length}개)`}
+        </Button>
+      </div>
     </div>
   )
 }
