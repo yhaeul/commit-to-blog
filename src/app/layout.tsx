@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
 import NavBar from "@/components/shared/NavBar";
+import SessionProviderWrapper from "@/components/shared/SessionProviderWrapper";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -28,9 +29,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NavBar />
-        {children}
-        <Toaster />
+        <SessionProviderWrapper>
+          <NavBar />
+          {children}
+          <Toaster />
+        </SessionProviderWrapper>
       </body>
     </html>
   );

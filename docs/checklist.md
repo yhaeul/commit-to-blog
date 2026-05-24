@@ -121,8 +121,45 @@
 - [x] 로딩 스켈레톤
   - [x] 이전 섹션 구현에서 완료 — PostCardSkeleton, posts/[id] 스켈레톤, wizard 단계별 Skeleton 확인
 
-## 7. 배포
+## 7. GitHub OAuth 전환
+- [x] `next-auth` 설치, `src/lib/auth.ts` 생성 (GitHub Provider + `accessToken` 세션 콜백)
+  - [x] `npm install next-auth` 실행
+  - [x] `src/lib/auth.ts` 생성 — `authOptions` export (GitHub Provider, `GITHUB_CLIENT_ID`/`GITHUB_CLIENT_SECRET` 환경변수 사용)
+  - [x] `authOptions`의 `callbacks.jwt`에서 GitHub 액세스 토큰을 `token.accessToken`에 저장
+  - [x] `authOptions`의 `callbacks.session`에서 `session.accessToken`으로 노출 (서버에서만 접근)
+  - [x] `src/types/index.ts` 수정 — `next-auth` 모듈 타입 확장 (`Session`에 `accessToken: string` 추가)
+- [x] `src/app/api/auth/[...nextauth]/route.ts` 생성, `SessionProvider` layout에 추가
+  - [x] `src/app/api/auth/[...nextauth]/route.ts` 생성 — `NextAuth(authOptions)` 핸들러 export (GET/POST)
+  - [x] `src/components/shared/SessionProviderWrapper.tsx` 생성 — `'use client'`, `SessionProvider` 래퍼
+  - [x] `src/app/layout.tsx` 수정 — `<SessionProviderWrapper>`로 `{children}` 감싸기
+- [ ] GitHub API 라우트 5개 — `x-github-pat` 헤더 → `getServerSession()` 으로 교체, `validate` 라우트 삭제
+  - [ ] `src/app/api/github/validate/route.ts` 삭제
+  - [ ] `src/app/api/github/repos/route.ts` — `getServerSession(authOptions)`로 토큰 읽기, 미인증 시 401 반환
+  - [ ] `src/app/api/github/branches/route.ts` — 동일
+  - [ ] `src/app/api/github/commits/route.ts` — 동일
+  - [ ] `src/app/api/github/diff/route.ts` — 동일
+- [ ] `StepPatInput` 삭제, `usePat` 삭제, `WizardState`에서 `pat`/`user` 필드 제거 (step 범위 1–6)
+  - [ ] `src/hooks/usePat.ts` 삭제
+  - [ ] `src/components/wizard/StepPatInput.tsx` 삭제
+  - [ ] `src/hooks/useWizardState.ts` 수정 — `pat`/`user` 필드 및 `SET_PAT` 액션 제거, step 범위 1–6
+  - [ ] `src/components/wizard/WizardShell.tsx` 수정 — 단계 인디케이터 총 6단계로 변경
+- [ ] 위저드 컴포넌트 4개 — `pat` prop 및 헤더 전송 제거
+  - [ ] `src/components/wizard/StepRepoSelect.tsx` — `pat` prop 제거, fetch에서 `'x-github-pat'` 헤더 제거
+  - [ ] `src/components/wizard/StepBranchSelect.tsx` — 동일
+  - [ ] `src/components/wizard/StepCommitSelect.tsx` — 동일
+  - [ ] `src/components/wizard/StepGenerating.tsx` — 동일
+- [ ] `/new` 페이지 — 미인증 시 로그인 리다이렉트
+  - [ ] `src/app/new/page.tsx` 수정 — `useSession()`으로 미인증 시 `signIn()` 호출
+  - [ ] `pat` 관련 props 전달 제거, `case` 번호 1–6으로 조정
+- [ ] NavBar — 로그인/로그아웃 버튼 추가 (`useSession`)
+  - [ ] `src/components/shared/NavBar.tsx` 수정 — `useSession()`으로 로그인 상태 감지
+  - [ ] 미로그인: "로그인" 버튼 → `signIn('github')` 호출
+  - [ ] 로그인: 사용자 아바타(`session.user.image`) + 이름 표시, "로그아웃" 버튼 → `signOut()` 호출
+  - [ ] `npm run build` 성공 확인
+
+## 8. 배포
 - [ ] Vercel 프로젝트 생성 및 GitHub 저장소 연결
-- [ ] Vercel 환경변수 설정 (MONGODB_URI, GEMINI_API_KEY)
+- [ ] Vercel 환경변수 설정 (`MONGODB_URI`, `GEMINI_API_KEY`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `NEXTAUTH_SECRET`)
+- [ ] GitHub OAuth App callback URL을 Vercel 도메인으로 업데이트
 - [ ] MongoDB Atlas Network Access 설정 (0.0.0.0/0)
 - [ ] 배포 후 동작 확인

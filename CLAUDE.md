@@ -16,7 +16,7 @@ GitHub 커밋/코드 변경 이력을 AI가 분석해 자동으로 개발 블로
 - **Framework**: Next.js 14 (App Router, TypeScript, `src/` 디렉터리)
 - **Database**: MongoDB Atlas Free Tier — Mongoose ODM
 - **LLM**: Google Gemini (`gemini-3.1-flash-lite`, `@google/generative-ai`)
-- **Auth**: GitHub PAT 직접 입력 (sessionStorage 보관, MVP) → 추후 GitHub OAuth 업그레이드 예정
+- **Auth**: GitHub OAuth (`next-auth` v4, GitHub Provider) — 액세스 토큰은 서버 세션에만 보관, 클라이언트 노출 금지
 - **Styling**: Tailwind CSS + shadcn/ui
 - **Markdown Editor**: `@uiw/react-md-editor` (SSR 불가 — 반드시 `dynamic` + `ssr: false` 사용)
 - **Deployment**: Vercel (GitHub 연동 후 `main` push 시 자동 배포)
@@ -31,14 +31,15 @@ npm run lint     # ESLint
 
 ## Key Patterns
 
-### PAT 보안 플로우
+### OAuth 토큰 보안 플로우
 ```
-클라이언트 sessionStorage
-    → x-github-pat 헤더
-    → Next.js API Route (서버, PAT가 메모리에만 존재)
+GitHub OAuth 로그인
+    → next-auth 세션 (서버 사이드, HttpOnly 쿠키)
+    → Next.js API Route에서 getServerSession()으로 토큰 읽기
     → GitHub API
 ```
-PAT는 DB에 저장하거나 응답 바디에 포함해선 안 된다.
+액세스 토큰은 DB에 저장하거나 클라이언트 응답 바디에 포함해선 안 된다.
+API Route에서 항상 `getServerSession(authOptions)`로 토큰을 읽고, 세션이 없으면 401을 반환한다.
 
 ### MongoDB 연결 싱글톤
 Next.js hot reload 시 연결이 중복되지 않도록 `global` 객체에 캐싱한다.
