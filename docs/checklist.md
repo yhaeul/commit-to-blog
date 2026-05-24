@@ -8,8 +8,18 @@
 - [x] `.gitignore` 확인 (.env.local 포함 여부)
 
 ## 2. 데이터 레이어
-- [ ] MongoDB 연결 싱글톤 (`src/lib/mongodb.ts`)
-- [ ] Post 모델 정의 (`src/models/Post.ts`)
+- [x] MongoDB 연결 싱글톤 (`src/lib/mongodb.ts`) — 커밋 #12
+  - [x] `src/lib/mongodb.ts` 생성
+  - [x] `MongooseCache` 인터페이스 정의 — `{ conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null }`
+  - [x] `declare global { var mongoose: MongooseCache }` 전역 타입 선언
+  - [x] `connectDB()` 함수 구현 — `global.mongoose`에 캐싱해 hot reload 시 중복 연결 방지
+  - [x] `npm run build` 통과 확인
+- [ ] Post 모델 정의 (`src/models/Post.ts`) — 커밋 #13
+  - [ ] `src/models/Post.ts` 생성
+  - [ ] `IPost` 인터페이스 정의 — `title`, `content`, `repoFullName`, `branch`, `selectedShas`, `thumbnailUrl?`, `published`, `createdAt`, `updatedAt`
+  - [ ] Mongoose 스키마 정의 — `timestamps: true`, 필드별 타입/required/default 설정
+  - [ ] 모델 export — 중복 등록 방지 패턴 (`mongoose.models.Post || mongoose.model('Post', PostSchema)`)
+  - [ ] `npm run build` 통과 확인
 
 ## 3. API Routes
 - [ ] `GET /api/github/validate` — PAT 검증, 유저 정보 반환
