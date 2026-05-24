@@ -34,11 +34,8 @@ export default function PostsPage() {
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-8">
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-8">
         <h1 className="text-3xl font-bold">내 블로그 포스트</h1>
-        <Link href="/new" className={buttonVariants()}>
-          새 글 작성
-        </Link>
       </div>
 
       {loading ? (

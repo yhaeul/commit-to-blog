@@ -19,6 +19,14 @@ interface Post {
   createdAt: string
 }
 
+function removeFirstHeading(markdown: string): string {
+  const lines = markdown.split('\n')
+  if (lines[0]?.startsWith('# ')) {
+    return lines.slice(1).join('\n').trimStart()
+  }
+  return markdown
+}
+
 export default function PostViewPage() {
   const { id } = useParams<{ id: string }>()
   const [post, setPost] = useState<Post | null>(null)
@@ -97,7 +105,7 @@ export default function PostViewPage() {
       </div>
 
       {/* 본문 */}
-      <MarkdownViewer source={post.content} />
+      <MarkdownViewer source={removeFirstHeading(post.content)} />
     </main>
   )
 }
