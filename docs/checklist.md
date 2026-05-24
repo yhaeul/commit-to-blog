@@ -28,10 +28,10 @@
   - [x] `src/app/api/github/branches/route.ts` — `?owner=&repo=` 파라미터, `GET /api/repos/{owner}/{repo}/branches` 호출
 - [x] `GET /api/github/repos` — 저장소 목록
 - [x] `GET /api/github/branches` — 브랜치 목록
-- [ ] `GET /api/github/commits` — 커밋 목록
-  - [ ] `src/app/api/github/commits/route.ts` — `?owner=&repo=&branch=`, 최근 30개 커밋 반환
-  - [ ] `src/app/api/github/diff/route.ts` — `?owner=&repo=&shas=sha1,sha2`, SHA 목록으로 diff 수집, 커밋당 6000자 truncate
-- [ ] `GET /api/github/diff` — 커밋 diff (truncate 포함)
+- [x] `GET /api/github/commits` — 커밋 목록
+  - [x] `src/app/api/github/commits/route.ts` — `?owner=&repo=&branch=`, 최근 30개 커밋 반환
+  - [x] `src/app/api/github/diff/route.ts` — `?owner=&repo=&shas=sha1,sha2`, SHA 목록으로 diff 수집, 커밋당 6000자 truncate
+- [x] `GET /api/github/diff` — 커밋 diff (truncate 포함)
 - [ ] `POST /api/generate` — Gemini 블로그 초안 생성
   - [ ] `src/lib/gemini.ts` 생성 — `GoogleGenerativeAI` 클라이언트 초기화 + 블로그 초안 생성 프롬프트 템플릿
   - [ ] `src/app/api/generate/route.ts` — `POST`, diff payload 전체 20000자 truncate 후 Gemini 호출, 마크다운 반환
