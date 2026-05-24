@@ -8,27 +8,37 @@
 - [x] `.gitignore` 확인 (.env.local 포함 여부)
 
 ## 2. 데이터 레이어
-- [x] MongoDB 연결 싱글톤 (`src/lib/mongodb.ts`) — 커밋 #12
+- [x] MongoDB 연결 싱글톤 (`src/lib/mongodb.ts`)
   - [x] `src/lib/mongodb.ts` 생성
   - [x] `MongooseCache` 인터페이스 정의 — `{ conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null }`
   - [x] `declare global { var mongoose: MongooseCache }` 전역 타입 선언
   - [x] `connectDB()` 함수 구현 — `global.mongoose`에 캐싱해 hot reload 시 중복 연결 방지
-  - [x] `npm run build` 통과 확인
-- [x] Post 모델 정의 (`src/models/Post.ts`) — 커밋 #13
+- [x] Post 모델 정의 (`src/models/Post.ts`)
   - [x] `src/models/Post.ts` 생성
   - [x] `IPost` 인터페이스 정의 — `title`, `content`, `repoFullName`, `branch`, `selectedShas`, `thumbnailUrl?`, `published`, `createdAt`, `updatedAt`
   - [x] Mongoose 스키마 정의 — `timestamps: true`, 필드별 타입/required/default 설정
   - [x] 모델 export — 중복 등록 방지 패턴 (`mongoose.models.Post || mongoose.model('Post', PostSchema)`)
-  - [x] `npm run build` 통과 확인
 
 ## 3. API Routes
 - [ ] `GET /api/github/validate` — PAT 검증, 유저 정보 반환
+  - [ ] `src/types/index.ts` 생성 — `GitHubUser`, `Repo`, `Branch`, `Commit` 인터페이스 정의
+  - [ ] `src/lib/github.ts` 생성 — `x-github-pat` 헤더를 받아 GitHub REST API를 호출하는 `fetchGitHub()` 헬퍼
+  - [ ] `src/app/api/github/validate/route.ts` — `GET /api/user` 호출, 유저 정보 반환
+  - [ ] `src/app/api/github/repos/route.ts` — `GET /api/user/repos` 호출, 저장소 목록 반환
+  - [ ] `src/app/api/github/branches/route.ts` — `?owner=&repo=` 파라미터, `GET /api/repos/{owner}/{repo}/branches` 호출
 - [ ] `GET /api/github/repos` — 저장소 목록
 - [ ] `GET /api/github/branches` — 브랜치 목록
 - [ ] `GET /api/github/commits` — 커밋 목록
+  - [ ] `src/app/api/github/commits/route.ts` — `?owner=&repo=&branch=`, 최근 30개 커밋 반환
+  - [ ] `src/app/api/github/diff/route.ts` — `?owner=&repo=&shas=sha1,sha2`, SHA 목록으로 diff 수집, 커밋당 6000자 truncate
 - [ ] `GET /api/github/diff` — 커밋 diff (truncate 포함)
 - [ ] `POST /api/generate` — Gemini 블로그 초안 생성
+  - [ ] `src/lib/gemini.ts` 생성 — `GoogleGenerativeAI` 클라이언트 초기화 + 블로그 초안 생성 프롬프트 템플릿
+  - [ ] `src/app/api/generate/route.ts` — `POST`, diff payload 전체 20000자 truncate 후 Gemini 호출, 마크다운 반환
 - [ ] `GET/POST /api/posts` — 포스트 목록 조회 / 생성
+  - [ ] `src/app/api/posts/route.ts` — `GET` 전체 목록(`-createdAt` 정렬) / `POST` 포스트 생성
+  - [ ] `src/app/api/posts/[id]/route.ts` — `GET` 단건 조회 / `PUT` 수정 / `DELETE` 삭제
+  - [ ] 에러 응답 형식 통일 — `{ error: string }` + 적절한 HTTP status
 - [ ] `GET/PUT/DELETE /api/posts/[id]` — 포스트 조회 / 수정 / 삭제
 
 ## 4. 위저드 UI (블로그 생성 흐름)
