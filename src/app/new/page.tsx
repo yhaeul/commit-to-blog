@@ -7,6 +7,7 @@ import StepBranchSelect from '@/components/wizard/StepBranchSelect'
 import StepCommitSelect from '@/components/wizard/StepCommitSelect'
 import StepGenerating from '@/components/wizard/StepGenerating'
 import StepEditor from '@/components/wizard/StepEditor'
+import StepSaved from '@/components/wizard/StepSaved'
 import { useWizardState } from '@/hooks/useWizardState'
 
 export default function NewPage() {
@@ -27,7 +28,7 @@ export default function NewPage() {
       case 6:
         return <StepEditor repo={state.repo!} branch={state.branch} selectedShas={state.selectedShas} generatedMarkdown={state.generatedMarkdown} dispatch={dispatch} />
       case 7:
-        return <div className="text-center text-muted-foreground">Step 7: 저장 완료 (준비 중)</div>
+        return <StepSaved savedPostId={state.savedPostId} dispatch={dispatch} />
       default:
         return null
     }

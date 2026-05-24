@@ -83,7 +83,12 @@
   - [x] 저장 버튼 클릭 시 `/api/posts` POST 호출, 로딩 중 버튼 비활성화, 성공 시 `dispatch({ type: 'SET_SAVED', postId })` → Step 7, 실패 시 에러 토스트 (sonner)
   - [x] 뒤로 가기 버튼 클릭 시 `window.confirm`으로 "작성 중인 내용이 사라집니다" 경고 후 `dispatch({ type: 'RESET' })`
   - [x] `src/app/new/page.tsx` 수정 — `case 6:` placeholder를 `<StepEditor pat={state.pat} repo={state.repo!} branch={state.branch} selectedShas={state.selectedShas} generatedMarkdown={state.generatedMarkdown} dispatch={dispatch} />` 로 교체
-- [ ] Step 7: 저장 완료 화면
+- [x] Step 7: 저장 완료 화면
+  - [x] `src/components/wizard/StepSaved.tsx` 생성 — `'use client'`, 저장 완료 안내 메시지
+  - [x] "포스트 편집" 버튼 → `/posts/[savedPostId]`로 이동 (`next/link`)
+  - [x] "목록으로" 버튼 → `/posts`로 이동
+  - [x] "새 글 작성" 버튼 → `dispatch({ type: 'RESET' })` 후 Step 1 초기화
+  - [x] `src/app/new/page.tsx` 수정 — `case 7:` placeholder를 `<StepSaved savedPostId={state.savedPostId} dispatch={dispatch} />` 로 교체
 
 ## 5. 포스트 목록 / 편집
 - [ ] 포스트 목록 화면 (카드 그리드)
