@@ -25,7 +25,7 @@ export default function StepSaved({ savedPostId, dispatch }: StepSavedProps) {
       </div>
 
       <div className="flex flex-col gap-3">
-        <Link href={`/posts/${savedPostId}`} className={buttonVariants({ variant: 'default' })}>
+        <Link href={`/posts/${savedPostId}/edit`} className={buttonVariants({ variant: 'default' })}>
           포스트 편집
         </Link>
         <Link href="/posts" className={buttonVariants({ variant: 'outline' })}>

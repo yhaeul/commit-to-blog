@@ -12,10 +12,6 @@ export default function PostCardSkeleton() {
           <Skeleton className="h-5 w-12" />
         </div>
         <Skeleton className="h-4 w-1/3" />
-        <div className="flex gap-2 pt-1">
-          <Skeleton className="h-8 w-20" />
-          <Skeleton className="h-8 w-24" />
-        </div>
       </div>
     </div>
   )

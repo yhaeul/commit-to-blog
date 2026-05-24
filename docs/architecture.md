@@ -13,7 +13,9 @@ src/
 │   ├── posts/
 │   │   ├── page.tsx                      # 저장된 포스트 카드 그리드
 │   │   └── [id]/
-│   │       └── page.tsx                  # 포스트 편집/발행
+│   │       ├── page.tsx                  # 포스트 읽기 (마크다운 렌더링)
+│   │       └── edit/
+│   │           └── page.tsx             # 포스트 편집/발행/삭제
 │   └── api/
 │       ├── github/
 │       │   ├── validate/
@@ -48,7 +50,8 @@ src/
 │   │   ├── PostCard.tsx                  # 포스트 카드 (썸네일, 제목, 태그, 날짜)
 │   │   └── PostCardSkeleton.tsx          # 로딩 중 스켈레톤 카드
 │   └── shared/
-│       ├── MarkdownEditor.tsx            # @uiw/react-md-editor dynamic import 래퍼
+│       ├── MarkdownEditor.tsx            # @uiw/react-md-editor dynamic import 래퍼 (편집기)
+│       ├── MarkdownViewer.tsx            # @uiw/react-md-editor Markdown preview 래퍼 (읽기 전용)
 │       └── NavBar.tsx                    # 상단 네비게이션 (로고, 새 글 작성 버튼)
 ├── lib/
 │   ├── mongodb.ts                        # MongoDB 커넥션 싱글톤 (global 캐싱)
@@ -83,8 +86,8 @@ src/
 }
 ```
 
-- `contentPreview`는 DB에 저장하지 않고 `content` 앞부분을 잘라 카드에 표시한다.
 - `thumbnailUrl`이 없으면 `branch` 값 기반 CSS 그라디언트로 대체한다.
+- 카드에 본문 미리보기는 표시하지 않는다. 읽기 화면(`/posts/[id]`)에서 전체 내용을 렌더링한다.
 
 ---
 
@@ -158,10 +161,24 @@ type WizardState = {
     ├── StepGenerating       → /api/github/diff + /api/generate 호출
     │                          완료 시 dispatch SET_MARKDOWN → step 5→6
     │
-    ├── StepEditor           → 마크다운 편집 → /api/posts POST 호출
+    ├── StepEditor           → 마크다운 편집 → /api/posts POST 호출 (PAT 불필요)
     │                          저장 시 dispatch SET_SAVED → step 6→7
     │
-    └── StepSaved            → savedPostId로 /posts/[id] 링크 제공
+    └── StepSaved            → savedPostId로 /posts/[id]/edit 링크 제공
+```
+
+### WizardAction 목록
+
+```typescript
+type WizardAction =
+  | { type: 'SET_PAT'; pat: string; user: GitHubUser }
+  | { type: 'SET_REPO'; repo: Repo }
+  | { type: 'SET_BRANCH'; branch: string }
+  | { type: 'SET_SHAS'; shas: string[] }
+  | { type: 'SET_MARKDOWN'; markdown: string }
+  | { type: 'SET_SAVED'; postId: string }
+  | { type: 'BACK' }   // step - 1 (최소 1)
+  | { type: 'RESET' }  // initialState로 초기화
 ```
 
 ### 그 외 화면 (단순 useState)
@@ -169,4 +186,5 @@ type WizardState = {
 | 화면 | 상태 | 설명 |
 |---|---|---|
 | `/posts` | `posts`, `loading`, `error` | 마운트 시 `/api/posts` fetch |
-| `/posts/[id]` | `post`, `saving` | 마운트 시 `/api/posts/[id]` fetch, StepEditor 재사용 |
+| `/posts/[id]` | `post`, `loading` | 마운트 시 `/api/posts/[id]` fetch, 읽기 전용 렌더링 |
+| `/posts/[id]/edit` | `post`, `title`, `content`, `saving` | 마운트 시 `/api/posts/[id]` fetch, 편집/발행/삭제 |

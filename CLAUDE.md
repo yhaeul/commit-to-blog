@@ -15,7 +15,7 @@ GitHub 커밋/코드 변경 이력을 AI가 분석해 자동으로 개발 블로
 
 - **Framework**: Next.js 14 (App Router, TypeScript, `src/` 디렉터리)
 - **Database**: MongoDB Atlas Free Tier — Mongoose ODM
-- **LLM**: Google Gemini 1.5 Flash (`@google/generative-ai`)
+- **LLM**: Google Gemini (`gemini-3.1-flash-lite`, `@google/generative-ai`)
 - **Auth**: GitHub PAT 직접 입력 (sessionStorage 보관, MVP) → 추후 GitHub OAuth 업그레이드 예정
 - **Styling**: Tailwind CSS + shadcn/ui
 - **Markdown Editor**: `@uiw/react-md-editor` (SSR 불가 — 반드시 `dynamic` + `ssr: false` 사용)

@@ -1,11 +1,7 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { format } from 'date-fns'
 import { ko } from 'date-fns/locale'
-import { Button, buttonVariants } from '@/components/ui/button'
 
 export interface PostItem {
   _id: string
@@ -19,7 +15,6 @@ export interface PostItem {
 
 interface PostCardProps {
   post: PostItem
-  onTogglePublish: (id: string, newPublished: boolean) => Promise<void>
 }
 
 function getBranchGradient(branch: string): string {
@@ -32,22 +27,12 @@ function getBranchGradient(branch: string): string {
   return `linear-gradient(135deg, hsl(${h1}, 65%, 60%), hsl(${h2}, 65%, 45%))`
 }
 
-export default function PostCard({ post, onTogglePublish }: PostCardProps) {
-  const [publishing, setPublishing] = useState(false)
-
-  async function handleToggle() {
-    setPublishing(true)
-    try {
-      await onTogglePublish(post._id, !post.published)
-    } catch {
-      // 에러 처리는 onTogglePublish(부모)에서 담당
-    } finally {
-      setPublishing(false)
-    }
-  }
-
+export default function PostCard({ post }: PostCardProps) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg border">
+    <Link
+      href={`/posts/${post._id}`}
+      className="flex flex-col overflow-hidden rounded-lg border transition-shadow hover:shadow-md"
+    >
       {/* 썸네일 */}
       <div className="relative h-32 w-full shrink-0">
         {post.thumbnailUrl ? (
@@ -91,24 +76,7 @@ export default function PostCard({ post, onTogglePublish }: PostCardProps) {
         <p className="text-xs text-muted-foreground">
           {format(new Date(post.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}
         </p>
-
-        <div className="mt-auto flex gap-2 pt-1">
-          <Link
-            href={`/posts/${post._id}`}
-            className={buttonVariants({ variant: 'outline', size: 'sm' })}
-          >
-            수정하기
-          </Link>
-          <Button
-            size="sm"
-            variant={post.published ? 'secondary' : 'default'}
-            onClick={handleToggle}
-            disabled={publishing}
-          >
-            {publishing ? '처리 중…' : post.published ? '초안으로' : '발행하기'}
-          </Button>
-        </div>
       </div>
-    </div>
+    </Link>
   )
 }
