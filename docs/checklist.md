@@ -132,12 +132,12 @@
   - [x] `src/app/api/auth/[...nextauth]/route.ts` 생성 — `NextAuth(authOptions)` 핸들러 export (GET/POST)
   - [x] `src/components/shared/SessionProviderWrapper.tsx` 생성 — `'use client'`, `SessionProvider` 래퍼
   - [x] `src/app/layout.tsx` 수정 — `<SessionProviderWrapper>`로 `{children}` 감싸기
-- [ ] GitHub API 라우트 5개 — `x-github-pat` 헤더 → `getServerSession()` 으로 교체, `validate` 라우트 삭제
-  - [ ] `src/app/api/github/validate/route.ts` 삭제
-  - [ ] `src/app/api/github/repos/route.ts` — `getServerSession(authOptions)`로 토큰 읽기, 미인증 시 401 반환
-  - [ ] `src/app/api/github/branches/route.ts` — 동일
-  - [ ] `src/app/api/github/commits/route.ts` — 동일
-  - [ ] `src/app/api/github/diff/route.ts` — 동일
+- [x] GitHub API 라우트 5개 — `x-github-pat` 헤더 → `getServerSession()` 으로 교체, `validate` 라우트 삭제
+  - [x] `src/app/api/github/validate/route.ts` 삭제
+  - [x] `src/app/api/github/repos/route.ts` — `getServerSession(authOptions)`로 토큰 읽기, 미인증 시 401 반환
+  - [x] `src/app/api/github/branches/route.ts` — 동일
+  - [x] `src/app/api/github/commits/route.ts` — 동일
+  - [x] `src/app/api/github/diff/route.ts` — 동일
 - [ ] `StepPatInput` 삭제, `usePat` 삭제, `WizardState`에서 `pat`/`user` 필드 제거 (step 범위 1–6)
   - [ ] `src/hooks/usePat.ts` 삭제
   - [ ] `src/components/wizard/StepPatInput.tsx` 삭제

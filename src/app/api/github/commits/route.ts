@@ -1,11 +1,13 @@
 import { NextRequest } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import { fetchGitHub } from '@/lib/github'
 import type { Commit } from '@/types'
 
 export async function GET(req: NextRequest) {
-  const pat = req.headers.get('x-github-pat')
-  if (!pat) {
-    return Response.json({ error: 'PAT가 필요합니다.' }, { status: 401 })
+  const session = await getServerSession(authOptions)
+  if (!session?.accessToken) {
+    return Response.json({ error: '로그인이 필요합니다.' }, { status: 401 })
   }
 
   const { searchParams } = new URL(req.url)
@@ -23,7 +25,7 @@ export async function GET(req: NextRequest) {
   try {
     const commits = (await fetchGitHub(
       `/repos/${owner}/${repo}/commits?sha=${branch}&per_page=30`,
-      pat
+      session.accessToken
     )) as Commit[]
     return Response.json(commits)
   } catch {

@@ -1,4 +1,6 @@
 import { NextRequest } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import { fetchGitHub } from '@/lib/github'
 
 const DIFF_LIMIT_PER_COMMIT = 6000
@@ -15,9 +17,9 @@ interface GitHubCommitDetail {
 }
 
 export async function GET(req: NextRequest) {
-  const pat = req.headers.get('x-github-pat')
-  if (!pat) {
-    return Response.json({ error: 'PAT가 필요합니다.' }, { status: 401 })
+  const session = await getServerSession(authOptions)
+  if (!session?.accessToken) {
+    return Response.json({ error: '로그인이 필요합니다.' }, { status: 401 })
   }
 
   const { searchParams } = new URL(req.url)
@@ -39,7 +41,7 @@ export async function GET(req: NextRequest) {
       shaList.map(async (sha) => {
         const detail = (await fetchGitHub(
           `/repos/${owner}/${repo}/commits/${sha}`,
-          pat
+          session.accessToken
         )) as GitHubCommitDetail
 
         const message = detail.commit.message
