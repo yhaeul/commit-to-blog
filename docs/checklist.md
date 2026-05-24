@@ -64,7 +64,12 @@
   - [x] 로딩 중 스켈레톤 표시, 로드 실패 시 에러 메시지 + 재시도 버튼
   - [x] 브랜치 클릭 시 하이라이트, 다음 버튼 활성화 → 클릭 시 `dispatch({ type: 'SET_BRANCH', branch })` 호출
   - [x] `src/app/new/page.tsx` 수정 — `case 3:` placeholder를 `<StepBranchSelect pat={state.pat} repo={state.repo!} dispatch={dispatch} />` 로 교체
-- [ ] Step 4: 커밋 선택 화면
+- [x] Step 4: 커밋 선택 화면
+  - [x] `src/components/wizard/StepCommitSelect.tsx` 생성 — `'use client'`, 진입 시 `/api/github/commits?owner=&repo=&branch=` 자동 로드 (`x-github-pat` 헤더)
+  - [x] 로딩 중 스켈레톤 표시, 로드 실패 시 에러 메시지 + 재시도 버튼
+  - [x] 체크박스로 다중 선택, 선택 개수 표시 ("N개 선택됨"), 최소 1개 선택 시 다음 버튼 활성화
+  - [x] 다음 버튼 클릭 시 `dispatch({ type: 'SET_SHAS', shas: selectedShas })` 호출
+  - [x] `src/app/new/page.tsx` 수정 — `case 4:` placeholder를 `<StepCommitSelect pat={state.pat} repo={state.repo!} branch={state.branch} dispatch={dispatch} />` 로 교체
 - [ ] Step 5: AI 생성 중 화면 (로딩)
 - [ ] Step 6: 글 편집 화면 (마크다운 에디터)
 - [ ] Step 7: 저장 완료 화면
