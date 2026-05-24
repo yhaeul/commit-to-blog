@@ -77,7 +77,12 @@
   - [x] 성공 시 `dispatch({ type: 'SET_MARKDOWN', markdown })` 호출 → Step 6 이동
   - [x] 실패 시 에러 메시지 + 재시도 버튼 (Step 4로 돌아가지 않고 동일 단계에서 재시도)
   - [x] `src/app/new/page.tsx` 수정 — `case 5:` placeholder를 `<StepGenerating pat={state.pat} repo={state.repo!} branch={state.branch} selectedShas={state.selectedShas} dispatch={dispatch} />` 로 교체
-- [ ] Step 6: 글 편집 화면 (마크다운 에디터)
+- [x] Step 6: 글 편집 화면 (마크다운 에디터)
+  - [x] `src/components/shared/MarkdownEditor.tsx` 생성 — `'use client'`, `dynamic(() => import('@uiw/react-md-editor'), { ssr: false })` 래퍼
+  - [x] `src/components/wizard/StepEditor.tsx` 생성 — `'use client'`, AI 응답 첫 `# ` 줄을 파싱해 제목 자동 채움 (수정 가능), `MarkdownEditor`로 본문 편집
+  - [x] 저장 버튼 클릭 시 `/api/posts` POST 호출, 로딩 중 버튼 비활성화, 성공 시 `dispatch({ type: 'SET_SAVED', postId })` → Step 7, 실패 시 에러 토스트 (sonner)
+  - [x] 뒤로 가기 버튼 클릭 시 `window.confirm`으로 "작성 중인 내용이 사라집니다" 경고 후 `dispatch({ type: 'RESET' })`
+  - [x] `src/app/new/page.tsx` 수정 — `case 6:` placeholder를 `<StepEditor pat={state.pat} repo={state.repo!} branch={state.branch} selectedShas={state.selectedShas} generatedMarkdown={state.generatedMarkdown} dispatch={dispatch} />` 로 교체
 - [ ] Step 7: 저장 완료 화면
 
 ## 5. 포스트 목록 / 편집
