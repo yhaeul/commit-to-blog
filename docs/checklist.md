@@ -35,11 +35,11 @@
 - [x] `POST /api/generate` — Gemini 블로그 초안 생성
   - [x] `src/lib/gemini.ts` 생성 — `GoogleGenerativeAI` 클라이언트 초기화 + 블로그 초안 생성 프롬프트 템플릿
   - [x] `src/app/api/generate/route.ts` — `POST`, diff payload 전체 20000자 truncate 후 Gemini 호출, 마크다운 반환
-- [ ] `GET/POST /api/posts` — 포스트 목록 조회 / 생성
-  - [ ] `src/app/api/posts/route.ts` — `GET` 전체 목록(`-createdAt` 정렬) / `POST` 포스트 생성
-  - [ ] `src/app/api/posts/[id]/route.ts` — `GET` 단건 조회 / `PUT` 수정 / `DELETE` 삭제
-  - [ ] 에러 응답 형식 통일 — `{ error: string }` + 적절한 HTTP status
-- [ ] `GET/PUT/DELETE /api/posts/[id]` — 포스트 조회 / 수정 / 삭제
+- [x] `GET/POST /api/posts` — 포스트 목록 조회 / 생성
+  - [x] `src/app/api/posts/route.ts` — `GET` 전체 목록(`-createdAt` 정렬) / `POST` 포스트 생성
+  - [x] `src/app/api/posts/[id]/route.ts` — `GET` 단건 조회 / `PUT` 수정 / `DELETE` 삭제
+  - [x] 에러 응답 형식 통일 — `{ error: string }` + 적절한 HTTP status
+- [x] `GET/PUT/DELETE /api/posts/[id]` — 포스트 조회 / 수정 / 삭제
 
 ## 4. 위저드 UI (블로그 생성 흐름)
 - [ ] 위저드 레이아웃 및 단계 인디케이터 (`WizardShell`)
