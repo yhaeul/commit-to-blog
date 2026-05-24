@@ -20,14 +20,14 @@
   - [x] 모델 export — 중복 등록 방지 패턴 (`mongoose.models.Post || mongoose.model('Post', PostSchema)`)
 
 ## 3. API Routes
-- [ ] `GET /api/github/validate` — PAT 검증, 유저 정보 반환
-  - [ ] `src/types/index.ts` 생성 — `GitHubUser`, `Repo`, `Branch`, `Commit` 인터페이스 정의
-  - [ ] `src/lib/github.ts` 생성 — `x-github-pat` 헤더를 받아 GitHub REST API를 호출하는 `fetchGitHub()` 헬퍼
-  - [ ] `src/app/api/github/validate/route.ts` — `GET /api/user` 호출, 유저 정보 반환
-  - [ ] `src/app/api/github/repos/route.ts` — `GET /api/user/repos` 호출, 저장소 목록 반환
-  - [ ] `src/app/api/github/branches/route.ts` — `?owner=&repo=` 파라미터, `GET /api/repos/{owner}/{repo}/branches` 호출
-- [ ] `GET /api/github/repos` — 저장소 목록
-- [ ] `GET /api/github/branches` — 브랜치 목록
+- [x] `GET /api/github/validate` — PAT 검증, 유저 정보 반환
+  - [x] `src/types/index.ts` 생성 — `GitHubUser`, `Repo`, `Branch`, `Commit` 인터페이스 정의
+  - [x] `src/lib/github.ts` 생성 — `x-github-pat` 헤더를 받아 GitHub REST API를 호출하는 `fetchGitHub()` 헬퍼
+  - [x] `src/app/api/github/validate/route.ts` — `GET /api/user` 호출, 유저 정보 반환
+  - [x] `src/app/api/github/repos/route.ts` — `GET /api/user/repos` 호출, 저장소 목록 반환
+  - [x] `src/app/api/github/branches/route.ts` — `?owner=&repo=` 파라미터, `GET /api/repos/{owner}/{repo}/branches` 호출
+- [x] `GET /api/github/repos` — 저장소 목록
+- [x] `GET /api/github/branches` — 브랜치 목록
 - [ ] `GET /api/github/commits` — 커밋 목록
   - [ ] `src/app/api/github/commits/route.ts` — `?owner=&repo=&branch=`, 최근 30개 커밋 반환
   - [ ] `src/app/api/github/diff/route.ts` — `?owner=&repo=&shas=sha1,sha2`, SHA 목록으로 diff 수집, 커밋당 6000자 truncate
