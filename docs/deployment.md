@@ -15,6 +15,9 @@ NEXTAUTH_SECRET=...
 # 로컬 개발 시
 NEXTAUTH_URL=http://localhost:3000
 # Vercel 배포 시 자동 설정되므로 생략 가능
+
+# 단일 사용자 제한 — 이 GitHub 로그인만 접근 허용 (설정하지 않으면 누구나 로그인 가능)
+ALLOWED_GITHUB_LOGIN=your-github-username
 ```
 
 `.env.local`은 절대 커밋하지 않는다.
@@ -37,6 +40,7 @@ NEXTAUTH_URL=http://localhost:3000
    - `GITHUB_CLIENT_ID`
    - `GITHUB_CLIENT_SECRET`
    - `NEXTAUTH_SECRET`
+   - `ALLOWED_GITHUB_LOGIN`
    - (`NEXTAUTH_URL`은 Vercel에서 자동 설정 — 생략 가능)
 3. Deploy — 이후 `main` push 시 자동 재배포
 
