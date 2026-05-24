@@ -8,10 +8,16 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession(authOptions)
+
   try {
     await connectDB()
     const post = await Post.findById(params.id).lean()
     if (!post) {
+      return Response.json({ error: '포스트를 찾을 수 없습니다.' }, { status: 404 })
+    }
+    // 비로그인 사용자는 미발행 포스트에 접근 불가
+    if (!session && !post.published) {
       return Response.json({ error: '포스트를 찾을 수 없습니다.' }, { status: 404 })
     }
     return Response.json(post)

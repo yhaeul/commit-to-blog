@@ -5,9 +5,13 @@ import { connectDB } from '@/lib/mongodb'
 import Post from '@/models/Post'
 
 export async function GET() {
+  const session = await getServerSession(authOptions)
+
   try {
     await connectDB()
-    const posts = await Post.find().sort({ createdAt: -1 }).lean()
+    // 비로그인 사용자는 발행된 포스트만 조회
+    const filter = session ? {} : { published: true }
+    const posts = await Post.find(filter).sort({ createdAt: -1 }).lean()
     return Response.json(posts)
   } catch {
     return Response.json(

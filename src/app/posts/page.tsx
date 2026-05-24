@@ -35,7 +35,7 @@ export default function PostsPage() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">내 블로그 포스트</h1>
+        <h1 className="text-3xl font-bold">yhaeul 블로그 포스트</h1>
       </div>
 
       {loading ? (
